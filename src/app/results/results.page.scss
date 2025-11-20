@@ -1,0 +1,249 @@
+.results-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100%;
+  padding: 20px;
+}
+
+.results-card {
+  max-width: 700px;
+  width: 100%;
+}
+
+.trophy-section {
+  text-align: center;
+  margin-bottom: 20px;
+  animation: bounceIn 0.8s ease;
+}
+
+@keyframes bounceIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.3);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+  70% {
+    transform: scale(0.9);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.trophy-icon {
+  font-size: 100px;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
+}
+
+.congratulations {
+  font-size: 32px;
+  font-weight: 700;
+  text-align: center;
+  color: var(--ion-color-primary);
+  margin-bottom: 20px;
+}
+
+.message-card {
+  margin-bottom: 30px;
+  text-align: center;
+
+  h2 {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 600;
+  }
+}
+
+.score-display {
+  display: flex;
+  justify-content: center;
+  margin: 40px 0;
+}
+
+.score-circle {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--ion-color-primary), var(--ion-color-secondary));
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  position: relative;
+  animation: pulse 2s ease-in-out infinite;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 8px;
+    border-radius: 50%;
+    background: var(--ion-background-color);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+.score-value {
+  font-size: 56px;
+  font-weight: 800;
+  color: var(--ion-color-primary);
+  position: relative;
+  z-index: 1;
+}
+
+.score-label {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--ion-color-medium);
+  position: relative;
+  z-index: 1;
+  margin-top: 4px;
+}
+
+.stats-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-bottom: 30px;
+}
+
+.stat-card {
+  margin: 0;
+  text-align: center;
+
+  ion-card-content {
+    padding: 20px 10px;
+  }
+
+  ion-icon {
+    font-size: 32px;
+    margin-bottom: 8px;
+  }
+
+  .stat-value {
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--ion-color-dark);
+    margin: 8px 0;
+  }
+
+  .stat-label {
+    font-size: 14px;
+    color: var(--ion-color-medium);
+    font-weight: 500;
+  }
+}
+
+.performance-details {
+  margin-bottom: 30px;
+
+  ion-card-header {
+    padding-bottom: 8px;
+  }
+
+  ion-card-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 18px;
+    
+    ion-icon {
+      font-size: 24px;
+    }
+  }
+
+  ion-list {
+    background: transparent;
+  }
+
+  ion-item {
+    --padding-start: 0;
+    --inner-padding-end: 0;
+    margin-bottom: 4px;
+
+    ion-icon {
+      font-size: 20px;
+      margin-right: 12px;
+    }
+
+    ion-label {
+      font-size: 14px;
+    }
+  }
+}
+
+.action-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  .action-button {
+    --border-radius: 12px;
+    height: 56px;
+    font-weight: 600;
+    font-size: 16px;
+    
+    ion-icon {
+      font-size: 22px;
+    }
+  }
+}
+
+// Responsividade
+@media (max-width: 576px) {
+  .congratulations {
+    font-size: 26px;
+  }
+
+  .trophy-icon {
+    font-size: 80px;
+  }
+
+  .score-circle {
+    width: 160px;
+    height: 160px;
+  }
+
+  .score-value {
+    font-size: 48px;
+  }
+
+  .score-label {
+    font-size: 14px;
+  }
+
+  .stats-container {
+    gap: 8px;
+  }
+
+  .stat-card {
+    ion-icon {
+      font-size: 24px;
+    }
+
+    .stat-value {
+      font-size: 24px;
+    }
+
+    .stat-label {
+      font-size: 12px;
+    }
+  }
+
+  .message-card h2 {
+    font-size: 18px;
+  }
+}
+

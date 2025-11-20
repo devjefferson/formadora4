@@ -1,0 +1,154 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-title>Resultados</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+  <div class="results-container">
+    <div class="results-card">
+      <div class="trophy-section">
+        <ion-icon [name]="getPerformanceIcon()" class="trophy-icon" [color]="messageColor"></ion-icon>
+      </div>
+
+      <h1 class="congratulations">Parabéns, {{ userName }}!</h1>
+      
+      <ion-card [color]="messageColor" class="message-card">
+        <ion-card-content>
+          <h2>{{ message }}</h2>
+        </ion-card-content>
+      </ion-card>
+
+      <div class="score-display">
+        <div class="score-circle">
+          <div class="score-value">{{ percentage }}%</div>
+          <div class="score-label">Aproveitamento</div>
+        </div>
+      </div>
+
+      <div class="stats-container">
+        <ion-card class="stat-card">
+          <ion-card-content>
+            <ion-icon name="checkmark-circle" color="success"></ion-icon>
+            <div class="stat-value">{{ score }}</div>
+            <div class="stat-label">Acertos</div>
+          </ion-card-content>
+        </ion-card>
+
+        <ion-card class="stat-card">
+          <ion-card-content>
+            <ion-icon name="close-circle" color="danger"></ion-icon>
+            <div class="stat-value">{{ totalQuestions - score }}</div>
+            <div class="stat-label">Erros</div>
+          </ion-card-content>
+        </ion-card>
+
+        <ion-card class="stat-card">
+          <ion-card-content>
+            <ion-icon name="help-circle" color="primary"></ion-icon>
+            <div class="stat-value">{{ totalQuestions }}</div>
+            <div class="stat-label">Total</div>
+          </ion-card-content>
+        </ion-card>
+      </div>
+
+      <div class="performance-details">
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title>
+              <ion-icon name="analytics-outline"></ion-icon>
+              Desempenho por Categoria
+            </ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-list lines="none">
+              <ion-item>
+                <ion-icon name="shield-checkmark-outline" slot="start" color="primary"></ion-icon>
+                <ion-label class="ion-text-wrap">Pirataria e uso ético de software</ion-label>
+              </ion-item>
+              <ion-item>
+                <ion-icon name="document-text-outline" slot="start" color="primary"></ion-icon>
+                <ion-label class="ion-text-wrap">Direitos digitais e contratos virtuais</ion-label>
+              </ion-item>
+              <ion-item>
+                <ion-icon name="people-outline" slot="start" color="primary"></ion-icon>
+                <ion-label class="ion-text-wrap">Inclusão digital e acessibilidade</ion-label>
+              </ion-item>
+              <ion-item>
+                <ion-icon name="leaf-outline" slot="start" color="primary"></ion-icon>
+                <ion-label class="ion-text-wrap">Sustentabilidade e lixo eletrônico</ion-label>
+              </ion-item>
+              <ion-item>
+                <ion-icon name="lock-closed-outline" slot="start" color="primary"></ion-icon>
+                <ion-label class="ion-text-wrap">Proteção de dados pessoais</ion-label>
+              </ion-item>
+              <ion-item>
+                <ion-icon name="newspaper-outline" slot="start" color="primary"></ion-icon>
+                <ion-label class="ion-text-wrap">Segurança da informação e LGPD</ion-label>
+              </ion-item>
+            </ion-list>
+          </ion-card-content>
+        </ion-card>
+      </div>
+
+      <div class="action-buttons">
+        <ion-button 
+          expand="block" 
+          size="large"
+          (click)="viewStats()"
+          color="success"
+          class="action-button"
+        >
+          <ion-icon name="stats-chart-outline" slot="start"></ion-icon>
+          Ver Estatísticas e Evolução
+        </ion-button>
+
+        <ion-button 
+          expand="block" 
+          size="large"
+          (click)="restartQuiz()"
+          color="secondary"
+          class="action-button"
+        >
+          <ion-icon name="refresh-outline" slot="start"></ion-icon>
+          Refazer Quiz
+        </ion-button>
+
+        <ion-button 
+          expand="block" 
+          size="large"
+          (click)="shareResults()"
+          fill="outline"
+          class="action-button"
+        >
+          <ion-icon name="share-social-outline" slot="start"></ion-icon>
+          Compartilhar
+        </ion-button>
+
+        <ion-button 
+          expand="block" 
+          size="large"
+          (click)="goHome()"
+          fill="clear"
+          class="action-button"
+        >
+          <ion-icon name="home-outline" slot="start"></ion-icon>
+          Fazer Novo Quiz
+        </ion-button>
+
+        <ion-button 
+          expand="block" 
+          size="large"
+          (click)="changeUser()"
+          fill="clear"
+          color="medium"
+          class="action-button"
+        >
+          <ion-icon name="person-outline" slot="start"></ion-icon>
+          Trocar de Usuário
+        </ion-button>
+      </div>
+    </div>
+  </div>
+</ion-content>
+

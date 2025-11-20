@@ -1,0 +1,359 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Estatísticas e Evolução</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+  <div class="stats-container" *ngIf="stats">
+    
+    <!-- Abas de navegação -->
+    <div class="tabs-container">
+      <ion-segment [(ngModel)]="activeTab">
+        <ion-segment-button value="quiz">
+          <ion-icon name="school-outline"></ion-icon>
+          <ion-label>Quiz</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="hangman">
+          <ion-icon name="game-controller-outline"></ion-icon>
+          <ion-label>Jogo da Forca</ion-label>
+        </ion-segment-button>
+      </ion-segment>
+    </div>
+    
+    <!-- Conteúdo do Quiz -->
+    <div *ngIf="activeTab === 'quiz'">
+    
+    <!-- Header com nome e resumo -->
+    <div class="stats-header">
+      <div class="user-info">
+        <ion-icon name="person-circle" class="user-icon"></ion-icon>
+        <div>
+          <h1>{{ stats.userName }}</h1>
+          <p class="subtitle">{{ stats.totalAttempts }} {{ stats.totalAttempts === 1 ? 'tentativa' : 'tentativas' }} realizadas</p>
+        </div>
+      </div>
+      
+      <div class="trend-indicator" [attr.data-trend]="getTrendIcon()">
+        <ion-icon [name]="getTrendIcon()" [color]="getTrendColor()"></ion-icon>
+        <span [style.color]="'var(--ion-color-' + getTrendColor() + ')'">{{ getEvolutionMessage() }}</span>
+      </div>
+    </div>
+
+    <!-- Cards de estatísticas gerais -->
+    <div class="stats-cards">
+      <ion-card class="stat-card best">
+        <ion-card-content>
+          <ion-icon name="trophy" color="warning"></ion-icon>
+          <div class="stat-value">{{ stats.bestScore }}%</div>
+          <div class="stat-label">Melhor Pontuação</div>
+        </ion-card-content>
+      </ion-card>
+
+      <ion-card class="stat-card average">
+        <ion-card-content>
+          <ion-icon name="stats-chart" color="primary"></ion-icon>
+          <div class="stat-value">{{ stats.averageScore }}%</div>
+          <div class="stat-label">Média Geral</div>
+        </ion-card-content>
+      </ion-card>
+
+      <ion-card class="stat-card total">
+        <ion-card-content>
+          <ion-icon name="checkbox" color="success"></ion-icon>
+          <div class="stat-value">{{ stats.totalAttempts }}</div>
+          <div class="stat-label">Quizzes Feitos</div>
+        </ion-card-content>
+      </ion-card>
+    </div>
+
+    <!-- Desempenho por categoria -->
+    <ion-card class="category-card">
+      <ion-card-header>
+        <ion-card-title>
+          <ion-icon name="analytics-outline"></ion-icon>
+          Desempenho por Categoria
+        </ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <div class="category-item" *ngFor="let category of categoryStatsArray">
+          <div class="category-header">
+            <div class="category-name">
+              <ion-icon [name]="getCategoryIcon(category.key)"></ion-icon>
+              <span>{{ category.key }}</span>
+            </div>
+            <div class="category-percentage" [style.color]="'var(--ion-color-' + getCategoryColor(category.value.percentage) + ')'">
+              {{ category.value.percentage }}%
+            </div>
+          </div>
+          <div class="category-progress">
+            <div class="progress-bar">
+              <div 
+                class="progress-fill" 
+                [style.width.%]="category.value.percentage"
+                [attr.data-color]="getCategoryColor(category.value.percentage)"
+              ></div>
+            </div>
+            <div class="category-details">
+              {{ category.value.correct }} de {{ category.value.total }} questões
+            </div>
+          </div>
+        </div>
+
+        <div *ngIf="!hasCategoryStats()" class="empty-state">
+          <ion-icon name="school-outline"></ion-icon>
+          <p>Faça um quiz para ver seu desempenho por categoria!</p>
+        </div>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Histórico de tentativas -->
+    <ion-card class="history-card">
+      <ion-card-header>
+        <div class="history-header">
+          <ion-card-title>
+            <ion-icon name="time-outline"></ion-icon>
+            Histórico de Tentativas
+          </ion-card-title>
+          <ion-button 
+            *ngIf="stats.attempts.length > 5"
+            fill="clear" 
+            size="small"
+            (click)="toggleAllAttempts()"
+          >
+            {{ showAllAttempts ? 'Ver menos' : 'Ver todas' }}
+          </ion-button>
+        </div>
+      </ion-card-header>
+      <ion-card-content>
+        <div class="attempts-list">
+          <div class="attempt-item" *ngFor="let attempt of recentAttempts; let i = index">
+            <div class="attempt-number">
+              <ion-icon [name]="getPerformanceIcon(attempt.percentage)" [color]="getPerformanceColor(attempt.percentage)"></ion-icon>
+              <span>#{{ stats.attempts.length - (showAllAttempts ? i : 0) + (showAllAttempts ? 0 : -stats.attempts.length + recentAttempts.length) }}</span>
+            </div>
+            <div class="attempt-details">
+              <div class="attempt-score">
+                <span class="score-value" [style.color]="'var(--ion-color-' + getPerformanceColor(attempt.percentage) + ')'">
+                  {{ attempt.percentage }}%
+                </span>
+                <span class="score-detail">{{ attempt.score }}/{{ attempt.totalQuestions }}</span>
+              </div>
+              <div class="attempt-date">{{ formatDate(attempt.date) }}</div>
+            </div>
+            <div class="attempt-progress">
+              <ion-progress-bar 
+                [value]="attempt.percentage / 100" 
+                [color]="getPerformanceColor(attempt.percentage)"
+              ></ion-progress-bar>
+            </div>
+          </div>
+        </div>
+
+        <div *ngIf="stats.attempts.length === 0" class="empty-state">
+          <ion-icon name="clipboard-outline"></ion-icon>
+          <p>Nenhum quiz realizado ainda.</p>
+          <ion-button (click)="goToQuiz()" color="primary">
+            Fazer Primeiro Quiz
+          </ion-button>
+        </div>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Ações -->
+    <div class="action-buttons">
+      <ion-button 
+        expand="block" 
+        size="large"
+        (click)="goToQuiz()"
+        color="primary"
+      >
+        <ion-icon name="play-outline" slot="start"></ion-icon>
+        Fazer Novo Quiz
+      </ion-button>
+
+      <ion-button 
+        *ngIf="stats.attempts.length > 0"
+        expand="block" 
+        size="large"
+        (click)="clearHistory()"
+        fill="outline"
+        color="danger"
+      >
+        <ion-icon name="trash-outline" slot="start"></ion-icon>
+        Limpar Histórico
+      </ion-button>
+    </div>
+    
+    </div>
+    <!-- Fim do conteúdo do Quiz -->
+
+    <!-- Conteúdo do Jogo da Forca -->
+    <div *ngIf="activeTab === 'hangman' && hangmanStats">
+      
+      <div class="stats-header">
+        <div class="user-info">
+          <ion-icon name="game-controller" class="user-icon"></ion-icon>
+          <div>
+            <h1>{{ stats.userName }}</h1>
+            <p class="subtitle">{{ hangmanStats.gamesPlayed }} {{ hangmanStats.gamesPlayed === 1 ? 'jogo' : 'jogos' }} realizados</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Cards de estatísticas do jogo da forca -->
+      <div class="stats-cards">
+        <ion-card class="stat-card">
+          <ion-card-content>
+            <ion-icon name="trophy" color="warning"></ion-icon>
+            <div class="stat-value">{{ hangmanStats.gamesWon }}</div>
+            <div class="stat-label">Vitórias</div>
+          </ion-card-content>
+        </ion-card>
+
+        <ion-card class="stat-card">
+          <ion-card-content>
+            <ion-icon name="close-circle" color="danger"></ion-icon>
+            <div class="stat-value">{{ hangmanStats.gamesLost }}</div>
+            <div class="stat-label">Derrotas</div>
+          </ion-card-content>
+        </ion-card>
+
+        <ion-card class="stat-card">
+          <ion-card-content>
+            <ion-icon name="flash" color="success"></ion-icon>
+            <div class="stat-value">{{ hangmanStats.winRate }}%</div>
+            <div class="stat-label">Taxa de Vitória</div>
+          </ion-card-content>
+        </ion-card>
+
+        <ion-card class="stat-card">
+          <ion-card-content>
+            <ion-icon name="medal" color="primary"></ion-icon>
+            <div class="stat-value">{{ hangmanStats.totalScore }}</div>
+            <div class="stat-label">Pontos Totais</div>
+          </ion-card-content>
+        </ion-card>
+
+        <ion-card class="stat-card">
+          <ion-card-content>
+            <ion-icon name="flame" color="danger"></ion-icon>
+            <div class="stat-value">{{ hangmanStats.currentStreak }}</div>
+            <div class="stat-label">Sequência Atual</div>
+          </ion-card-content>
+        </ion-card>
+
+        <ion-card class="stat-card">
+          <ion-card-content>
+            <ion-icon name="trending-up" color="secondary"></ion-icon>
+            <div class="stat-value">{{ hangmanStats.bestStreak }}</div>
+            <div class="stat-label">Melhor Sequência</div>
+          </ion-card-content>
+        </ion-card>
+      </div>
+
+      <!-- Histórico de jogos da forca -->
+      <ion-card class="history-card">
+        <ion-card-header>
+          <div class="history-header">
+            <ion-card-title>
+              <ion-icon name="time-outline"></ion-icon>
+              Histórico de Jogos
+            </ion-card-title>
+            <ion-button 
+              *ngIf="hangmanStats.gamesPlayed > 5"
+              fill="clear" 
+              size="small"
+              (click)="toggleAllHangmanGames()"
+            >
+              {{ showAllHangmanGames ? 'Ver menos' : 'Ver todos' }}
+            </ion-button>
+          </div>
+        </ion-card-header>
+        <ion-card-content>
+          <div class="hangman-games-list">
+            <div class="hangman-game-item" *ngFor="let game of recentHangmanGames">
+              <div class="game-result-icon">
+                <ion-icon [name]="game.won ? 'trophy' : 'close-circle'" [color]="game.won ? 'success' : 'danger'"></ion-icon>
+              </div>
+              <div class="game-details">
+                <div class="game-word">
+                  <strong>{{ game.word }}</strong>
+                  <ion-badge [color]="game.won ? 'success' : 'danger'">
+                    {{ game.won ? 'Vitória' : 'Derrota' }}
+                  </ion-badge>
+                </div>
+                <div class="game-info">
+                  <span class="game-category">
+                    <ion-icon name="folder-outline"></ion-icon>
+                    {{ game.category }}
+                  </span>
+                  <span class="game-errors">
+                    <ion-icon name="close-outline"></ion-icon>
+                    {{ game.wrongGuesses }} erro(s)
+                  </span>
+                  <span class="game-score">
+                    <ion-icon name="star-outline"></ion-icon>
+                    +{{ game.score }} pts
+                  </span>
+                </div>
+                <div class="game-date">{{ formatDate(game.date) }}</div>
+              </div>
+            </div>
+          </div>
+
+          <div *ngIf="hangmanStats.gamesPlayed === 0" class="empty-state">
+            <ion-icon name="game-controller-outline"></ion-icon>
+            <p>Nenhum jogo realizado ainda.</p>
+            <ion-button routerLink="/hangman" color="secondary">
+              Jogar Agora
+            </ion-button>
+          </div>
+        </ion-card-content>
+      </ion-card>
+
+      <!-- Ações -->
+      <div class="action-buttons">
+        <ion-button 
+          expand="block" 
+          size="large"
+          routerLink="/hangman"
+          color="secondary"
+        >
+          <ion-icon name="play-outline" slot="start"></ion-icon>
+          Jogar Forca
+        </ion-button>
+
+        <ion-button 
+          *ngIf="hangmanStats.gamesPlayed > 0"
+          expand="block" 
+          size="large"
+          (click)="clearHangmanHistory()"
+          fill="outline"
+          color="danger"
+        >
+          <ion-icon name="trash-outline" slot="start"></ion-icon>
+          Limpar Histórico
+        </ion-button>
+      </div>
+
+    </div>
+    <!-- Fim do conteúdo do Jogo da Forca -->
+
+  </div>
+
+  <!-- Estado vazio -->
+  <div class="empty-container" *ngIf="!stats || stats.totalAttempts === 0">
+    <ion-icon name="bar-chart-outline" class="empty-icon"></ion-icon>
+    <h2>Nenhuma Estatística Ainda</h2>
+    <p>Faça seu primeiro quiz para ver suas estatísticas e evolução!</p>
+    <ion-button (click)="goToQuiz()" size="large" color="primary">
+      <ion-icon name="rocket-outline" slot="start"></ion-icon>
+      Começar Agora
+    </ion-button>
+  </div>
+</ion-content>
+

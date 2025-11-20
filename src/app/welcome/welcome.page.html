@@ -1,0 +1,122 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-title>Quiz de Ética Digital</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+  <div class="welcome-container">
+    
+    <!-- Menu Principal (quando usuário já está cadastrado) -->
+    <div class="main-menu" *ngIf="hasUser">
+      <div class="user-greeting">
+        <ion-icon name="person-circle" class="user-icon-large"></ion-icon>
+        <h1>Olá, {{ currentUserName }}!</h1>
+        <p class="subtitle">O que você gostaria de fazer hoje?</p>
+      </div>
+
+      <div class="menu-options">
+        <ion-card class="menu-card quiz-card" (click)="goToQuiz()" button>
+          <ion-card-content>
+            <ion-icon name="school-outline" class="menu-icon"></ion-icon>
+            <h2>Quiz de Ética Digital</h2>
+            <p>Teste seus conhecimentos sobre LGPD, segurança e ética digital</p>
+            <ion-badge color="primary">15 perguntas</ion-badge>
+          </ion-card-content>
+        </ion-card>
+
+        <ion-card class="menu-card hangman-card" (click)="goToHangman()" button>
+          <ion-card-content>
+            <ion-icon name="game-controller-outline" class="menu-icon"></ion-icon>
+            <h2>Jogo da Forca</h2>
+            <p>Descubra termos relacionados à tecnologia e ética digital</p>
+            <ion-badge color="secondary">Divertido!</ion-badge>
+          </ion-card-content>
+        </ion-card>
+
+        <ion-card class="menu-card stats-card" (click)="goToStatistics()" button>
+          <ion-card-content>
+            <ion-icon name="stats-chart-outline" class="menu-icon"></ion-icon>
+            <h2>Minhas Estatísticas</h2>
+            <p>Veja seu progresso e evolução nos desafios</p>
+            <ion-badge color="success">Acompanhe!</ion-badge>
+          </ion-card-content>
+        </ion-card>
+      </div>
+
+      <ion-button 
+        expand="block" 
+        fill="clear" 
+        color="medium"
+        (click)="changeUser()"
+        class="change-user-button"
+      >
+        <ion-icon name="person-outline" slot="start"></ion-icon>
+        Trocar de Usuário
+      </ion-button>
+    </div>
+
+    <!-- Tela de Cadastro (primeira vez) -->
+    <div class="welcome-card" *ngIf="!hasUser">
+      <ion-icon name="school-outline" class="welcome-icon"></ion-icon>
+      
+      <h1>Bem-vindo!</h1>
+      
+      <p class="welcome-text">
+        Teste seus conhecimentos sobre ética digital, incluindo temas como:
+      </p>
+      
+      <ion-list class="topics-list" lines="none">
+        <ion-item>
+          <ion-icon name="shield-checkmark-outline" slot="start" color="primary"></ion-icon>
+          <ion-label class="ion-text-wrap">Pirataria e uso ético de software</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-icon name="document-text-outline" slot="start" color="primary"></ion-icon>
+          <ion-label class="ion-text-wrap">Direitos digitais e contratos virtuais</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-icon name="people-outline" slot="start" color="primary"></ion-icon>
+          <ion-label class="ion-text-wrap">Inclusão digital e acessibilidade</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-icon name="leaf-outline" slot="start" color="primary"></ion-icon>
+          <ion-label class="ion-text-wrap">Sustentabilidade e lixo eletrônico</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-icon name="lock-closed-outline" slot="start" color="primary"></ion-icon>
+          <ion-label class="ion-text-wrap">Proteção de dados pessoais</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-icon name="newspaper-outline" slot="start" color="primary"></ion-icon>
+          <ion-label class="ion-text-wrap">Segurança da informação e LGPD</ion-label>
+        </ion-item>
+      </ion-list>
+
+      <div class="input-section">
+        <ion-item class="name-input">
+          <ion-label position="stacked">Digite seu nome</ion-label>
+          <ion-input 
+            [(ngModel)]="userName" 
+            type="text" 
+            placeholder="Seu nome aqui"
+            (keyup.enter)="startQuiz()"
+          ></ion-input>
+        </ion-item>
+        
+        <ion-button 
+          expand="block" 
+          size="large"
+          (click)="startQuiz()"
+          [disabled]="!userName.trim()"
+          class="start-button"
+        >
+          <ion-icon name="play-outline" slot="start"></ion-icon>
+          Entrar
+        </ion-button>
+      </div>
+    </div>
+    
+  </div>
+</ion-content>
+

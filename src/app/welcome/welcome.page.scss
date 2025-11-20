@@ -1,0 +1,263 @@
+.welcome-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100%;
+  padding: 20px;
+}
+
+.welcome-card {
+  max-width: 600px;
+  width: 100%;
+  text-align: center;
+}
+
+.welcome-icon {
+  font-size: 80px;
+  color: var(--ion-color-primary);
+  margin-bottom: 20px;
+}
+
+h1 {
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--ion-color-primary);
+  margin-bottom: 20px;
+}
+
+.welcome-text {
+  font-size: 16px;
+  color: var(--ion-color-medium);
+  margin-bottom: 30px;
+  line-height: 1.6;
+}
+
+.topics-list {
+  background: transparent;
+  margin-bottom: 30px;
+  text-align: left;
+
+  ion-item {
+    --background: var(--ion-color-light);
+    --border-radius: 12px;
+    margin-bottom: 8px;
+    --padding-start: 16px;
+    --inner-padding-end: 16px;
+
+    ion-icon {
+      font-size: 24px;
+      margin-right: 12px;
+    }
+
+    ion-label {
+      font-size: 14px;
+      font-weight: 500;
+    }
+  }
+}
+
+.input-section {
+  margin-top: 40px;
+}
+
+.name-input {
+  --background: var(--ion-color-light);
+  --border-radius: 12px;
+  margin-bottom: 20px;
+  font-size: 16px;
+
+  ion-label {
+    font-weight: 600;
+  }
+}
+
+.start-button {
+  --border-radius: 12px;
+  height: 56px;
+  font-weight: 600;
+  font-size: 18px;
+  margin-top: 20px;
+  
+  ion-icon {
+    font-size: 24px;
+  }
+}
+
+// Menu Principal
+.main-menu {
+  max-width: 800px;
+  width: 100%;
+  animation: fadeIn 0.5s ease;
+}
+
+.user-greeting {
+  text-align: center;
+  margin-bottom: 40px;
+
+  .user-icon-large {
+    font-size: 100px;
+    color: var(--ion-color-primary);
+    margin-bottom: 20px;
+    animation: bounceIn 0.8s ease;
+  }
+
+  h1 {
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--ion-color-primary);
+    margin-bottom: 8px;
+  }
+
+  .subtitle {
+    font-size: 16px;
+    color: var(--ion-color-medium);
+  }
+}
+
+@keyframes bounceIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.3);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+  70% {
+    transform: scale(0.9);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.menu-options {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.menu-card {
+  margin: 0;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border-left: 4px solid transparent;
+
+  &:hover {
+    transform: translateX(8px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  }
+
+  &.quiz-card {
+    border-left-color: var(--ion-color-primary);
+
+    &:hover {
+      background: rgba(var(--ion-color-primary-rgb), 0.05);
+    }
+  }
+
+  &.hangman-card {
+    border-left-color: var(--ion-color-secondary);
+
+    &:hover {
+      background: rgba(var(--ion-color-secondary-rgb), 0.05);
+    }
+  }
+
+  &.stats-card {
+    border-left-color: var(--ion-color-success);
+
+    &:hover {
+      background: rgba(var(--ion-color-success-rgb), 0.05);
+    }
+  }
+
+  ion-card-content {
+    padding: 24px;
+  }
+
+  .menu-icon {
+    font-size: 48px;
+    margin-bottom: 12px;
+    
+    .quiz-card & {
+      color: var(--ion-color-primary);
+    }
+    
+    .hangman-card & {
+      color: var(--ion-color-secondary);
+    }
+    
+    .stats-card & {
+      color: var(--ion-color-success);
+    }
+  }
+
+  h2 {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--ion-color-dark);
+    margin: 0 0 8px 0;
+  }
+
+  p {
+    font-size: 14px;
+    color: var(--ion-color-medium);
+    margin: 0 0 12px 0;
+    line-height: 1.5;
+  }
+
+  ion-badge {
+    font-size: 12px;
+  }
+}
+
+.change-user-button {
+  margin-top: 20px;
+  --border-radius: 12px;
+}
+
+// Responsividade
+@media (max-width: 576px) {
+  h1 {
+    font-size: 28px;
+  }
+
+  .welcome-icon {
+    font-size: 60px;
+  }
+
+  .topics-list ion-item ion-label {
+    font-size: 13px;
+  }
+
+  .user-greeting {
+    .user-icon-large {
+      font-size: 80px;
+    }
+
+    h1 {
+      font-size: 28px;
+    }
+
+    .subtitle {
+      font-size: 14px;
+    }
+  }
+
+  .menu-card {
+    .menu-icon {
+      font-size: 40px;
+    }
+
+    h2 {
+      font-size: 18px;
+    }
+
+    p {
+      font-size: 13px;
+    }
+  }
+}
+

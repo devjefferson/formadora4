@@ -1,0 +1,434 @@
+.hangman-container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding-bottom: 20px;
+}
+
+// Placar
+.score-board {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 20px;
+
+  ion-chip {
+    font-weight: 600;
+    
+    ion-icon {
+      margin-right: 4px;
+    }
+  }
+}
+
+// Informações do jogo
+.game-info {
+  margin-bottom: 24px;
+
+  .category-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    background: var(--ion-color-secondary);
+    color: white;
+    border-radius: 16px;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 12px;
+
+    ion-icon {
+      font-size: 16px;
+    }
+  }
+
+  .hint {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 15px;
+    color: var(--ion-color-dark);
+
+    ion-icon {
+      font-size: 20px;
+      color: var(--ion-color-warning);
+    }
+  }
+}
+
+// Área do jogo
+.game-area {
+  margin-bottom: 24px;
+}
+
+// Desenho da forca (CSS puro)
+.hangman-drawing {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 32px;
+  min-height: 300px;
+  position: relative;
+}
+
+.gallows {
+  position: relative;
+  width: 200px;
+  height: 250px;
+}
+
+.base {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 150px;
+  height: 10px;
+  background: #8b4513;
+  border-radius: 5px;
+}
+
+.pole {
+  position: absolute;
+  bottom: 10px;
+  left: 50px;
+  width: 10px;
+  height: 200px;
+  background: #8b4513;
+}
+
+.beam {
+  position: absolute;
+  top: 10px;
+  left: 50px;
+  width: 100px;
+  height: 10px;
+  background: #8b4513;
+}
+
+.rope {
+  position: absolute;
+  top: 20px;
+  left: 143px;
+  width: 3px;
+  height: 30px;
+  background: #654321;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+
+  &.visible {
+    opacity: 1;
+  }
+}
+
+.head {
+  position: absolute;
+  top: 50px;
+  left: 120px;
+  width: 50px;
+  height: 50px;
+  border: 4px solid #333;
+  border-radius: 50%;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  animation: drawHead 0.5s ease;
+
+  &.visible {
+    opacity: 1;
+  }
+
+  &::before {
+    content: '😵';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 32px;
+  }
+}
+
+@keyframes drawHead {
+  from {
+    transform: scale(0);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+.body {
+  position: absolute;
+  top: 100px;
+  left: 142px;
+  width: 4px;
+  height: 60px;
+  background: #333;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+
+  &.visible {
+    opacity: 1;
+    animation: drawLine 0.5s ease;
+  }
+}
+
+@keyframes drawLine {
+  from {
+    height: 0;
+  }
+  to {
+    height: 60px;
+  }
+}
+
+.left-arm,
+.right-arm {
+  position: absolute;
+  top: 110px;
+  width: 40px;
+  height: 4px;
+  background: #333;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+
+  &.visible {
+    opacity: 1;
+    animation: drawArm 0.5s ease;
+  }
+}
+
+.left-arm {
+  left: 102px;
+  transform: rotate(-30deg);
+}
+
+.right-arm {
+  left: 144px;
+  transform: rotate(30deg);
+}
+
+@keyframes drawArm {
+  from {
+    width: 0;
+  }
+  to {
+    width: 40px;
+  }
+}
+
+.left-leg,
+.right-leg {
+  position: absolute;
+  top: 160px;
+  width: 40px;
+  height: 4px;
+  background: #333;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+
+  &.visible {
+    opacity: 1;
+    animation: drawLeg 0.5s ease;
+  }
+}
+
+.left-leg {
+  left: 102px;
+  transform: rotate(30deg);
+}
+
+.right-leg {
+  left: 144px;
+  transform: rotate(-30deg);
+}
+
+@keyframes drawLeg {
+  from {
+    width: 0;
+  }
+  to {
+    width: 40px;
+  }
+}
+
+.attempts-counter {
+  margin-top: 12px;
+}
+
+// Palavra
+.word-display {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 24px 0;
+}
+
+.letter-box {
+  width: 40px;
+  height: 50px;
+  border-bottom: 3px solid var(--ion-color-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--ion-color-primary);
+  animation: fadeIn 0.5s ease;
+
+  &.revealed {
+    animation: revealLetter 0.4s ease;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes revealLetter {
+  0% {
+    transform: scale(0);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+// Teclado
+.keyboard {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(40px, 1fr));
+  gap: 6px;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.keyboard-button {
+  --padding-start: 8px;
+  --padding-end: 8px;
+  --padding-top: 8px;
+  --padding-bottom: 8px;
+  font-weight: 700;
+  font-size: 14px;
+  min-height: 40px;
+
+  &::part(native) {
+    transition: all 0.2s ease;
+  }
+
+  &:active::part(native) {
+    transform: scale(0.95);
+  }
+}
+
+// Resultado
+.result-card {
+  animation: scaleIn 0.5s ease;
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.result-content {
+  text-align: center;
+  padding: 20px;
+
+  .result-icon {
+    font-size: 80px;
+    margin-bottom: 16px;
+    animation: bounceIn 0.8s ease;
+  }
+
+  h2 {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 12px;
+  }
+
+  p {
+    font-size: 16px;
+    margin-bottom: 24px;
+
+    strong {
+      font-size: 20px;
+      letter-spacing: 2px;
+    }
+  }
+
+  .result-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+
+    ion-button {
+      --border-radius: 12px;
+      height: 48px;
+      font-weight: 600;
+    }
+  }
+}
+
+@keyframes bounceIn {
+  0% {
+    transform: scale(0);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  70% {
+    transform: scale(0.9);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+// Responsividade
+@media (max-width: 576px) {
+  .gallows {
+    transform: scale(0.8);
+  }
+
+  .letter-box {
+    width: 32px;
+    height: 42px;
+    font-size: 22px;
+  }
+
+  .keyboard {
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+  }
+
+  .keyboard-button {
+    font-size: 12px;
+    min-height: 36px;
+  }
+
+  .result-content {
+    .result-icon {
+      font-size: 60px;
+    }
+
+    h2 {
+      font-size: 24px;
+    }
+  }
+}
+
