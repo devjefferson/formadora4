@@ -22,6 +22,7 @@ export class WelcomePage implements OnInit {
     private quizService: QuizService
   ) {}
 
+
   ngOnInit(): void {
     // Verifica se já tem nome salvo
     if (this.quizService.hasUserName()) {
@@ -33,7 +34,8 @@ export class WelcomePage implements OnInit {
   startQuiz(): void {
     if (this.userName.trim()) {
       this.quizService.setUserName(this.userName);
-      this.quizService.reset();
+      this.quizService.clearHistory()
+      this.quizService.clearHangmanHistory()
       window.location.reload();
     }
   }
