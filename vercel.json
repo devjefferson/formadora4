@@ -10,7 +10,7 @@
   ],
   "headers": [
     {
-      "source": "/(.*\\.(js|css|png|jpg|jpeg|gif|ico|svg|woff|woff2|ttf|eot|json|webmanifest))",
+      "source": "/(.*)",
       "headers": [
         {
           "key": "Cache-Control",
@@ -19,16 +19,16 @@
       ]
     },
     {
-      "source": "/assets/(.*)",
+      "source": "/index.html",
       "headers": [
         {
           "key": "Cache-Control",
-          "value": "public, max-age=31536000, immutable"
+          "value": "public, max-age=0, must-revalidate"
         }
       ]
     },
     {
-      "source": "/sw.js",
+      "source": "/ngsw-worker.js",
       "headers": [
         {
           "key": "Cache-Control",
