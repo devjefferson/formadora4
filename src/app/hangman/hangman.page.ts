@@ -59,7 +59,7 @@ export class HangmanPage implements OnInit {
 
   ngOnInit(): void {
     if (!this.quizService.getUserName()) {
-      this.router.navigate(['/welcome']);
+      this.router.navigate(['/home']);
       return;
     }
     this.loadStats();
@@ -138,6 +138,16 @@ export class HangmanPage implements OnInit {
     return this.guessedLetters.includes(letter) && !this.currentWord!.word.includes(letter);
   }
 
+  getLetterClass(letter: string): string {
+    if (this.isLetterCorrect(letter)) {
+      return 'correct';
+    }
+    if (this.isLetterWrong(letter)) {
+      return 'wrong';
+    }
+    return '';
+  }
+
   getHangmanImage(): string {
     return `assets/hangman/hangman-${this.wrongGuesses}.svg`;
   }
@@ -147,7 +157,7 @@ export class HangmanPage implements OnInit {
   }
 
   goBack(): void {
-    this.router.navigate(['/welcome']);
+    this.router.navigate(['/home']);
   }
 
   getUserName(): string {

@@ -32,7 +32,7 @@ export class StatisticsPage implements OnInit {
 
   ngOnInit(): void {
     if (!this.quizService.getUserName()) {
-      this.router.navigate(['/welcome']);
+      this.router.navigate(['/home']);
       return;
     }
 

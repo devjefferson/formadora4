@@ -1,0 +1,98 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      <div class="header-title">
+        <ion-icon name="home"></ion-icon>
+        <span>Início</span>
+      </div>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+  <div class="home-container">
+    
+    <div class="user-greeting">
+      <div class="avatar-wrapper">
+        <ion-icon name="person" class="avatar-icon"></ion-icon>
+      </div>
+      <h1 class="greeting-text">Olá, <span class="gradient-name">{{ currentUserName }}</span>!</h1>
+      <p class="subtitle">O que você quer fazer hoje?</p>
+    </div>
+
+    <div class="menu-grid">
+      <ion-card class="menu-card primary-gradient" (click)="goToQuiz()" button>
+        <div class="card-background"></div>
+        <ion-card-content>
+          <div class="icon-container primary">
+            <ion-icon name="school"></ion-icon>
+          </div>
+          <div class="card-text">
+            <h2>Quiz de Ética</h2>
+          <p>Teste seus conhecimentos sobre LGPD, segurança e ética digital</p>
+            <div class="card-footer">
+              <ion-chip color="primary">
+                <ion-icon name="help-circle"></ion-icon>
+                <ion-label>15 perguntas</ion-label>
+              </ion-chip>
+              <ion-icon name="arrow-forward" class="arrow"></ion-icon>
+            </div>
+          </div>
+        </ion-card-content>
+      </ion-card>
+
+      <ion-card class="menu-card secondary-gradient" (click)="goToHangman()" button>
+        <div class="card-background"></div>
+        <ion-card-content>
+          <div class="icon-container secondary">
+            <ion-icon name="game-controller"></ion-icon>
+          </div>
+          <div class="card-text">
+          <h2>Jogo da Forca</h2>
+            <p>Descubra termos relacionados à tecnologia e ética</p>
+            <div class="card-footer">
+              <ion-chip color="secondary">
+                <ion-icon name="happy"></ion-icon>
+                <ion-label>Divertido!</ion-label>
+              </ion-chip>
+              <ion-icon name="arrow-forward" class="arrow"></ion-icon>
+            </div>
+          </div>
+        </ion-card-content>
+      </ion-card>
+
+      <ion-card class="menu-card success-gradient" (click)="goToStatistics()" button>
+        <div class="card-background"></div>
+        <ion-card-content>
+          <div class="icon-container success">
+            <ion-icon name="stats-chart"></ion-icon>
+          </div>
+          <div class="card-text">
+            <h2>Estatísticas</h2>
+          <p>Veja seu progresso e evolução nos desafios</p>
+            <div class="card-footer">
+              <ion-chip color="success">
+                <ion-icon name="trending-up"></ion-icon>
+                <ion-label>Seu desempenho</ion-label>
+              </ion-chip>
+              <ion-icon name="arrow-forward" class="arrow"></ion-icon>
+            </div>
+          </div>
+        </ion-card-content>
+      </ion-card>
+    </div>
+
+    <ion-button 
+      expand="block" 
+      fill="outline" 
+      color="medium"
+      (click)="changeUser()"
+      class="change-user-button"
+    >
+      <ion-icon name="swap-horizontal-outline" slot="start"></ion-icon>
+      Trocar de Usuário
+    </ion-button>
+    
+  </div>
+</ion-content>
+

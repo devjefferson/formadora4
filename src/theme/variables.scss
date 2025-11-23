@@ -1,2 +1,222 @@
 // For information on how to create your own theme, please refer to:
 // https://ionicframework.com/docs/theming/
+
+/** Ionic CSS Variables **/
+:root {
+  /** primary **/
+  --ion-color-primary: #6366f1;
+  --ion-color-primary-rgb: 99, 102, 241;
+  --ion-color-primary-contrast: #ffffff;
+  --ion-color-primary-contrast-rgb: 255, 255, 255;
+  --ion-color-primary-shade: #5759d4;
+  --ion-color-primary-tint: #7375f2;
+
+  /** secondary **/
+  --ion-color-secondary: #8b5cf6;
+  --ion-color-secondary-rgb: 139, 92, 246;
+  --ion-color-secondary-contrast: #ffffff;
+  --ion-color-secondary-contrast-rgb: 255, 255, 255;
+  --ion-color-secondary-shade: #7a51d8;
+  --ion-color-secondary-tint: #9770f7;
+
+  /** tertiary **/
+  --ion-color-tertiary: #ec4899;
+  --ion-color-tertiary-rgb: 236, 72, 153;
+  --ion-color-tertiary-contrast: #ffffff;
+  --ion-color-tertiary-contrast-rgb: 255, 255, 255;
+  --ion-color-tertiary-shade: #d03f87;
+  --ion-color-tertiary-tint: #ee5aa3;
+
+  /** success **/
+  --ion-color-success: #10b981;
+  --ion-color-success-rgb: 16, 185, 129;
+  --ion-color-success-contrast: #ffffff;
+  --ion-color-success-contrast-rgb: 255, 255, 255;
+  --ion-color-success-shade: #0ea372;
+  --ion-color-success-tint: #28c194;
+
+  /** warning **/
+  --ion-color-warning: #f59e0b;
+  --ion-color-warning-rgb: 245, 158, 11;
+  --ion-color-warning-contrast: #000000;
+  --ion-color-warning-contrast-rgb: 0, 0, 0;
+  --ion-color-warning-shade: #d88b0a;
+  --ion-color-warning-tint: #f6a823;
+
+  /** danger **/
+  --ion-color-danger: #ef4444;
+  --ion-color-danger-rgb: 239, 68, 68;
+  --ion-color-danger-contrast: #ffffff;
+  --ion-color-danger-contrast-rgb: 255, 255, 255;
+  --ion-color-danger-shade: #d23c3c;
+  --ion-color-danger-tint: #f15757;
+
+  /** dark **/
+  --ion-color-dark: #f8fafc;
+  --ion-color-dark-rgb: 248, 250, 252;
+  --ion-color-dark-contrast: #0f172a;
+  --ion-color-dark-contrast-rgb: 15, 23, 42;
+  --ion-color-dark-shade: #e2e8f0;
+  --ion-color-dark-tint: #ffffff;
+
+  /** medium **/
+  --ion-color-medium: #cbd5e1;
+  --ion-color-medium-rgb: 203, 213, 225;
+  --ion-color-medium-contrast: #0f172a;
+  --ion-color-medium-contrast-rgb: 15, 23, 42;
+  --ion-color-medium-shade: #94a3b8;
+  --ion-color-medium-tint: #e2e8f0;
+
+  /** light **/
+  --ion-color-light: #f1f5f9;
+  --ion-color-light-rgb: 241, 245, 249;
+  --ion-color-light-contrast: #0f172a;
+  --ion-color-light-contrast-rgb: 15, 23, 42;
+  --ion-color-light-shade: #e2e8f0;
+  --ion-color-light-tint: #ffffff;
+
+  /** Dark theme específico com melhor contraste **/
+  --ion-background-color: #0f172a;
+  --ion-background-color-rgb: 15, 23, 42;
+  
+  --ion-text-color: #f1f5f9;
+  --ion-text-color-rgb: 241, 245, 249;
+  
+  --ion-text-color-step-50: #e2e8f0;
+  --ion-text-color-step-100: #cbd5e1;
+  --ion-text-color-step-150: #94a3b8;
+  
+  --ion-card-background: #1e293b;
+  --ion-toolbar-background: #1e293b;
+  --ion-item-background: #1e293b;
+  
+  --ion-border-color: #334155;
+}
+
+/* Estilos globais modernos */
+* {
+  --ion-font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  
+  // ADICIONADO: Box-sizing consistente para todos os elementos
+  box-sizing: border-box;
+}
+
+// ADICIONADO: Reset para Android WebView
+html, body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  // CRÍTICO: Prevenir scroll horizontal no Android
+  overflow-x: hidden;
+  // CRÍTICO: Permitir scroll vertical
+  overflow-y: auto;
+  
+  // ADICIONADO: Prevenir bounce effect no iOS/Android
+  overscroll-behavior-y: contain;
+  
+  // ADICIONADO: Otimização de fontes para WebView
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+// ADICIONADO: Garantir que ion-app ocupe toda a altura
+ion-app {
+  width: 100%;
+  height: 100%;
+  
+  // ADICIONADO: Prevenir tap highlight no Android
+  -webkit-tap-highlight-color: transparent;
+  tap-highlight-color: transparent;
+}
+
+ion-card {
+  --background: var(--ion-card-background);
+  border-radius: 16px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+  
+  // ADICIONADO: Prevenir quebra de layout no WebView
+  overflow: hidden;
+}
+
+ion-button {
+  --border-radius: 12px;
+  text-transform: none;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  
+  // ADICIONADO: Prevenir tap delay no Android
+  touch-action: manipulation;
+}
+
+ion-toolbar {
+  --background: var(--ion-toolbar-background);
+  --border-color: var(--ion-border-color);
+}
+
+ion-item {
+  --background: var(--ion-item-background);
+  --border-color: var(--ion-border-color);
+}
+
+ion-chip {
+  border-radius: 12px;
+  font-weight: 600;
+  
+  ion-label {
+    color: inherit;
+  }
+}
+
+/* Animações suaves - OTIMIZADO para Android */
+* {
+  // MODIFICADO: Transition mais leve para melhor performance no WebView
+  transition: background-color 0.15s ease, color 0.15s ease;
+  
+  // ADICIONADO: Acelerar animações via GPU (melhor performance no WebView)
+  will-change: auto;
+}
+
+/* Melhorias de acessibilidade para contraste */
+ion-button {
+  ion-icon {
+    color: inherit;
+  }
+}
+
+ion-badge {
+  font-weight: 700;
+  
+  ion-icon {
+    color: inherit;
+  }
+}
+
+/* Garantir texto legível em cards */
+ion-card-title {
+  color: var(--ion-text-color);
+}
+
+ion-card-subtitle {
+  color: var(--ion-text-color-step-150);
+}
+
+/* Scrollbar personalizado */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--ion-background-color);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--ion-color-medium);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--ion-color-primary);
+}

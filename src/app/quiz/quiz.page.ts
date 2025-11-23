@@ -28,7 +28,7 @@ export class QuizPage implements OnInit {
 
   ngOnInit(): void {
     if (!this.quizService.getUserName()) {
-      this.router.navigate(['/welcome']);
+      this.router.navigate(['/home']);
       return;
     }
     this.loadQuestion();
@@ -143,7 +143,7 @@ export class QuizPage implements OnInit {
           text: 'Sim, trocar',
           handler: () => {
             this.quizService.clearUserName();
-            this.router.navigate(['/welcome']);
+            this.router.navigate(['/home']);
           }
         }
       ]
@@ -190,7 +190,7 @@ export class QuizPage implements OnInit {
           role: 'destructive',
           handler: () => {
             this.quizService.reset();
-            this.router.navigate(['/welcome']);
+            this.router.navigate(['/home']);
           }
         }
       ]

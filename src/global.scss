@@ -32,6 +32,184 @@
  * https://ionicframework.com/docs/theming/dark-mode
  */
 
-/* @import "@ionic/angular/css/palettes/dark.always.css"; */
-/* @import "@ionic/angular/css/palettes/dark.class.css"; */
-@import '@ionic/angular/css/palettes/dark.system.css';
+/* Forçando dark mode sempre */
+@import "@ionic/angular/css/palettes/dark.always.css";
+
+/**
+ * Melhorias de Acessibilidade
+ * -----------------------------------------------------
+ * Garantindo contraste adequado WCAG AA/AAA
+ */
+
+/* Garantir texto legível em todos os elementos */
+body {
+  color: #f1f5f9;
+  background-color: #0f172a;
+}
+
+/* Títulos e headings */
+h1, h2, h3, h4, h5, h6 {
+  color: #f1f5f9;
+}
+
+/* Parágrafos e textos gerais */
+p {
+  color: #e2e8f0;
+}
+
+/* Labels e spans */
+label, span {
+  color: #e2e8f0;
+}
+
+/* Links com bom contraste */
+a {
+  color: #818cf8;
+  
+  &:hover {
+    color: #a5b4fc;
+  }
+}
+
+/* Input e textarea com contraste */
+ion-input, ion-textarea {
+  --color: #f1f5f9;
+  --placeholder-color: #94a3b8;
+}
+
+/* Select com contraste */
+ion-select {
+  --placeholder-color: #94a3b8;
+  color: #f1f5f9;
+}
+
+/* Lista items */
+ion-item {
+  --color: #f1f5f9;
+  
+  ion-label {
+    color: #f1f5f9;
+  }
+}
+
+/* Toast e alertas */
+ion-toast {
+  --color: #f1f5f9;
+}
+
+ion-alert {
+  --color: #f1f5f9;
+}
+
+/* Modal */
+ion-modal {
+  --color: #f1f5f9;
+}
+
+/**
+ * Correções para Teclado Virtual
+ * -----------------------------------------------------
+ * Melhorar comportamento quando teclado abre/fecha
+ */
+
+// Prevenir overflow quando teclado abre
+html.keyboard-open {
+  ion-content {
+    --keyboard-offset: 0px;
+  }
+}
+
+// Garantir que inputs fiquem visíveis
+ion-item {
+  .item-native {
+    overflow: visible;
+  }
+}
+
+// ion-content: CRÍTICO para Android WebView
+ion-content {
+  // Scroll suave quando teclado abre
+  &::part(scroll) {
+    overscroll-behavior: contain;
+  }
+  
+  // Garantir rolagem e touch events - ESSENCIAL para Android
+  --overflow: auto;
+  touch-action: pan-y;
+  position: relative;
+  z-index: 1;
+  
+  // ADICIONADO: Forçar altura correta no WebView
+  height: 100%;
+  
+  // ADICIONADO: Garantir que o conteúdo possa crescer
+  contain: layout style paint;
+  
+  // ADICIONADO: Prevenir seleção de texto acidental no Android
+  -webkit-user-select: none;
+  user-select: none;
+  
+  // ADICIONADO: Otimização de rendering para WebView
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+}
+
+// Input focus scroll automático
+ion-input, ion-textarea {
+  &:focus-within {
+    scroll-margin-bottom: 100px;
+  }
+}
+
+// REMOVIDO: Transition pode causar lag no Android
+// ion-content {
+//   transition: padding-bottom 0.3s ease-in-out;
+// }
+
+// Indicador visual de input ativo
+ion-input:focus-within,
+ion-textarea:focus-within {
+  --background: rgba(99, 102, 241, 0.1);
+  --border-color: var(--ion-color-primary);
+  --border-width: 2px;
+}
+
+/**
+ * Correções de Event Blocking
+ * -----------------------------------------------------
+ * Garantir que cliques funcionem corretamente
+ */
+
+// Inputs e elementos interativos
+ion-input, 
+ion-textarea, 
+ion-button,
+ion-item[button] {
+  pointer-events: auto !important;
+  position: relative;
+  z-index: 20;
+  
+  // Touch target mínimo (acessibilidade)
+  min-height: 44px;
+  
+  &[disabled] {
+    pointer-events: none;
+  }
+}
+
+// Cards clicáveis
+ion-card[button],
+.clickable {
+  pointer-events: auto;
+  cursor: pointer;
+  position: relative;
+  z-index: 10;
+}
+
+// Elementos decorativos não devem bloquear
+[class*="-background"],
+[class*="-decoration"] {
+  pointer-events: none;
+  z-index: -1;
+}
+

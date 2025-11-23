@@ -1,0 +1,10 @@
+node_modules
+.git
+.angular
+android
+ios
+capacitor.config.ts
+*.md
+.env
+.env.local
+

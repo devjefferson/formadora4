@@ -11,6 +11,10 @@ export const routes: Routes = [
     loadComponent: () => import('./welcome/welcome.page').then(m => m.WelcomePage)
   },
   {
+    path: 'home',
+    loadComponent: () => import('./home/home.page').then(m => m.HomePage)
+  },
+  {
     path: 'quiz',
     loadComponent: () => import('./quiz/quiz.page').then(m => m.QuizPage)
   },
@@ -26,8 +30,5 @@ export const routes: Routes = [
     path: 'hangman',
     loadComponent: () => import('./hangman/hangman.page').then(m => m.HangmanPage)
   },
-  {
-    path: 'tabs',
-    loadChildren: () => import('./tabs/tabs.routes').then((m) => m.routes),
-  },
+ 
 ];

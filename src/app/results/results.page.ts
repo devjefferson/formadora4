@@ -19,6 +19,15 @@ export class ResultsPage implements OnInit {
   message: string = '';
   messageColor: string = '';
 
+  topics = [
+    { name: 'Pirataria e uso ético', icon: 'shield-checkmark-outline', color: 'primary' },
+    { name: 'Direitos digitais', icon: 'document-text-outline', color: 'secondary' },
+    { name: 'Inclusão digital', icon: 'people-outline', color: 'success' },
+    { name: 'Sustentabilidade', icon: 'leaf-outline', color: 'tertiary' },
+    { name: 'Proteção de dados', icon: 'lock-closed-outline', color: 'warning' },
+    { name: 'LGPD e Segurança', icon: 'newspaper-outline', color: 'danger' }
+  ];
+
   constructor(
     private router: Router,
     private quizService: QuizService
@@ -26,7 +35,7 @@ export class ResultsPage implements OnInit {
 
   ngOnInit(): void {
     if (!this.quizService.getUserName()) {
-      this.router.navigate(['/welcome']);
+      this.router.navigate(['/home']);
       return;
     }
 
@@ -69,7 +78,7 @@ export class ResultsPage implements OnInit {
   }
 
   goHome(): void {
-    this.router.navigate(['/quiz']);
+    this.router.navigate(['/home']);
   }
 
   changeUser(): void {
@@ -97,6 +106,25 @@ export class ResultsPage implements OnInit {
         alert('Resultado copiado para a área de transferência!');
       });
     }
+  }
+
+  getCircumference(): string {
+    const radius = 100;
+    const circumference = 2 * Math.PI * radius;
+    return `${circumference} ${circumference}`;
+  }
+
+  getDashOffset(): number {
+    const radius = 100;
+    const circumference = 2 * Math.PI * radius;
+    return circumference - (this.percentage / 100) * circumference;
+  }
+
+  getProgressColor(): string {
+    if (this.percentage >= 90) return 'var(--ion-color-success)';
+    if (this.percentage >= 70) return 'var(--ion-color-primary)';
+    if (this.percentage >= 50) return 'var(--ion-color-warning)';
+    return 'var(--ion-color-danger)';
   }
 }
 
